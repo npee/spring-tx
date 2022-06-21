@@ -26,6 +26,11 @@ public class InternalCallV1Test {
         callService.internal();
     }
 
+    @Test
+    void external_call() {
+        callService.external();
+    }
+
     @TestConfiguration
     static class InternalCallV1TestConfig {
 
@@ -41,6 +46,7 @@ public class InternalCallV1Test {
         public void external() {
             log.info("call external");
             printTxInfo();
+            internal();
         }
 
         @Transactional
