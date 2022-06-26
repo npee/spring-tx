@@ -5,3 +5,4 @@ logging:
     #JPA log
     org.springframework.orm.jpa.JpaTransactionManager: DEBUG
     org.hibernate.resource.transaction: DEBUG
+    org.hibernate.SQL: DEBUG
