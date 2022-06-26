@@ -2,6 +2,7 @@ package io.npee.springtx.order;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,20 @@ class OrderServiceTest {
         //then
         Order findOrder = orderRepository.findById(order.getId()).get();
         Assertions.assertThat(findOrder.getPayStatus()).isEqualTo("완료");
+    }
+
+    @Test
+    void runtime_exception() {
+        //given
+        Order order = new Order();
+        order.setUsername("예외");
+
+        //when
+        Assertions.assertThatThrownBy(() -> orderService.order(order)).isInstanceOf(RuntimeException.class);
+
+        //then
+        Optional<Order> optOrder = orderRepository.findById(order.getId());
+        Assertions.assertThat(optOrder.isEmpty()).isTrue();
     }
 
 }
