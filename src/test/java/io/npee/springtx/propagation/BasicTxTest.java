@@ -38,4 +38,14 @@ public class BasicTxTest {
         txManager.commit(status);
         log.info("트랜잭션 커밋 완료");
     }
+
+    @Test
+    void rollback() {
+        log.info("트랜잭션 시작");
+        TransactionStatus status = txManager.getTransaction(new DefaultTransactionAttribute());
+
+        log.info("트랜잭션 롤백 시작");
+        txManager.rollback(status);
+        log.info("트랜잭션 롤백 완료");
+    }
 }
