@@ -17,4 +17,7 @@ public class Member {
     private Long id;
     private String username;
 
+    public Member(String username) {
+        this.username = username;
+    }
 }

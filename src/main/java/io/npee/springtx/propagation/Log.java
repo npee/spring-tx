@@ -19,4 +19,8 @@ public class Log {
     @Id @GeneratedValue
     private Long id;
     private String message;
+
+    public Log(String message) {
+        this.message = message;
+    }
 }
