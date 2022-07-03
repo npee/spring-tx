@@ -33,5 +33,6 @@ class MemberServiceTest {
         memberService.joinV1(username);
 
         assertTrue(memberRepository.find(username).isPresent());
+        assertTrue(logRepository.find(username).isPresent());
     }
 }

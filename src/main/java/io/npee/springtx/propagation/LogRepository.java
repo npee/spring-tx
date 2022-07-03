@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -23,6 +24,12 @@ public class LogRepository {
             log.info("log 저장 시 예외 발생");
             throw new RuntimeException("예외 발생");
         }
-
     }
+
+    public Optional<Log> find(String message) {
+        return em.createQuery("select l from Log l where l.message = :message", Log.class)
+                .setParameter("message", message)
+                .getResultList().stream().findAny();
+    }
+
 }
