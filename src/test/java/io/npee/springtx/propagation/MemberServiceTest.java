@@ -35,4 +35,21 @@ class MemberServiceTest {
         assertTrue(memberRepository.find(username).isPresent());
         assertTrue(logRepository.find(username).isPresent());
     }
+
+    /**
+     * memberService    @Transaction: OFF
+     * memberRepository @Transaction: ON
+     * logRepository    @Transaction: ON, Exception
+     */
+    @Test
+    void outer_tx_off_fail() {
+        String username = "로그예외_outerTxOff_fail";
+
+        assertThrows(RuntimeException.class, () -> memberService.joinV1(username));
+
+        assertTrue(memberRepository.find(username).isPresent());
+        assertTrue(logRepository.find(username).isEmpty());
+    }
+
+
 }
