@@ -22,9 +22,9 @@ class MemberServiceTest {
     LogRepository logRepository;
 
     /**
-     * memberService    @Transaction: OFF
-     * memberRepository @Transaction: ON
-     * logRepository    @Transaction: ON
+     * {@link MemberService}    @Transaction: OFF
+     * {@link MemberRepository} @Transaction: ON
+     * {@link LogRepository}    @Transaction: ON
      */
     @Test
     void outer_tx_off_success() {
@@ -37,9 +37,9 @@ class MemberServiceTest {
     }
 
     /**
-     * memberService    @Transaction: OFF
-     * memberRepository @Transaction: ON
-     * logRepository    @Transaction: ON, Exception
+     * {@link MemberService}    @Transaction: OFF
+     * {@link MemberRepository} @Transaction: ON
+     * {@link LogRepository}    @Transaction: ON, Exception
      */
     @Test
     void outer_tx_off_fail() {
@@ -49,6 +49,22 @@ class MemberServiceTest {
 
         assertTrue(memberRepository.find(username).isPresent());
         assertTrue(logRepository.find(username).isEmpty());
+    }
+
+
+    /**
+     * {@link MemberService}    @Transaction: ON
+     * {@link MemberRepository} @Transaction: OFF
+     * {@link LogRepository}    @Transaction: OFF
+     */
+    @Test
+    void single_tx() {
+        String username = "outerTxOff_success";
+
+        memberService.joinV1(username);
+
+        assertTrue(memberRepository.find(username).isPresent());
+        assertTrue(logRepository.find(username).isPresent());
     }
 
 
