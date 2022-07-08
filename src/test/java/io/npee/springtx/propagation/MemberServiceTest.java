@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.UnexpectedRollbackException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -97,5 +98,19 @@ class MemberServiceTest {
         assertTrue(logRepository.find(username).isEmpty());
     }
 
+    /**
+     * {@link MemberService}    @Transaction: ON
+     * {@link MemberRepository} @Transaction: ON
+     * {@link LogRepository}    @Transaction: ON, Exception
+     */
+    @Test
+    void recover_exception_fail() {
+        String username = "로그예외_recoverException_fail";
+
+        assertThrows(UnexpectedRollbackException.class, () -> memberService.joinV2(username));
+
+        assertTrue(memberRepository.find(username).isEmpty());
+        assertTrue(logRepository.find(username).isEmpty());
+    }
 
 }
